@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------
+   Theme: light, taken from the hero photo —
+   navy (trousers), cerulean sky, cloud white, palm gold & leaf green.
+   Use in JSX as Tailwind classes, e.g. bg-navy, text-accent, bg-sky, text-sun, bg-accent-soft
+   --------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --background: #f6f9fb;    /* cloud white */
+  --surface: #ffffff;       /* cards */
+  --ink: #141d33;           /* main text (navy-black) */
+  --muted: #55627a;         /* secondary text */
+  --line: #dbe5ec;          /* borders */
+  --navy: #16243f;          /* primary: buttons, headings */
+  --navy-deep: #0e1830;     /* contact panel */
+  --accent: #0b74a3;        /* sky blue, dark enough for text */
+  --sky: #1a9fd6;           /* bright sky: glows, rings, decoration */
+  --accent-bright: #7fd0f2; /* light sky: text on navy backgrounds */
+  --accent-soft: #e2f2f9;   /* tags, soft highlights */
+  --sun: #d9a23a;           /* palm gold: small sparkles only */
+  --leaf: #5c8a2e;          /* palm leaf green: "growing" details */
+}
+
+/* Small text sizes, a half-step bigger than Tailwind's defaults
+   (text-xs: 12px → 13.5px, text-sm: 14px → 15px) */
+@theme {
+  --text-xs: 0.84375rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.4rem;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-accent: var(--accent);
+  --color-sky: var(--sky);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-soft: var(--accent-soft);
+  --color-sun: var(--sun);
+  --color-leaf: var(--leaf);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-bricolage);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--navy);
+}
+
+/* ---------- Animations ---------- */
+
+/* Scroll reveal: elements fade/slide in when they enter the screen (see components/Reveal.js) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Floating glow blobs in the hero */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.1); }
+  66% { transform: translate(-30px, 20px) scale(0.95); }
+}
+.animate-float { animation: float 14s ease-in-out infinite; }
+.animate-float-slow { animation: float 20s ease-in-out infinite reverse; }
+
+/* Infinite tool ticker */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 28s linear infinite; }
+.animate-marquee:hover { animation-play-state: paused; }
+
+/* Rotating word in the hero */
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(0.5em); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+.animate-word { animation: word-in 0.5s ease both; }
+
+/* Gentle bounce on the scroll hint */
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+.animate-nudge { animation: nudge 1.6s ease-in-out infinite; }
+
+/* Floating chips next to the hero photo */
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-bob { animation: bob 5s ease-in-out infinite; }
+.animate-bob-delayed { animation: bob 5s ease-in-out 1.5s infinite; }
+
+/* Mini bar chart bars growing and shrinking */
+@keyframes grow {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.55); }
+}
+.animate-grow { animation: grow 2.4s ease-in-out infinite; }
+
+/* Respect visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .animate-float, .animate-float-slow, .animate-marquee, .animate-word, .animate-nudge,
+  .animate-bob, .animate-bob-delayed, .animate-grow {
+    animation: none;
+  }
+}
+
+/* Waving hand in the hero */
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+.animate-wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-wave { animation: none; }
 }
