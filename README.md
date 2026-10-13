@@ -1,4 +1,6 @@
-# Portfolio — TAPOPHILE DJOUAKA Nathanael Caleb
+# DataAnalyst — Portfolio of TAPOPHILE DJOUAKA Nathanael Caleb
+
+> My data analyst journey from beginner to expert.
 
 Data analyst portfolio built with Next.js + Supabase.
 Public site for recruiters, scholarship committees and data experts; private `/admin` dashboard to manage content.
