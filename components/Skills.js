@@ -1,8 +1,9 @@
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
+import { formatDate } from "@/lib/format";
 
 // Skills are proven by projects, not by percentage bars.
-export default function Skills({ skills }) {
+export default function Skills({ skills, certifications = [] }) {
   if (!skills.length) return null;
 
   return (
@@ -39,6 +40,33 @@ export default function Skills({ skills }) {
             </Reveal>
           ))}
         </div>
+
+        {certifications.length > 0 && (
+          <Reveal className="mt-14">
+            <h3 className="mb-5 text-2xl font-bold text-navy">Certifications</h3>
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {certifications.map((cert) => (
+                <li key={cert.id ?? cert.name} className="flex items-start gap-4 rounded-2xl border border-line bg-surface p-5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent">✓</span>
+                  <div>
+                    <p className="font-semibold text-ink">
+                      {cert.credential_url ? (
+                        <a href={cert.credential_url} target="_blank" rel="noreferrer" className="hover:text-accent">
+                          {cert.name} ↗
+                        </a>
+                      ) : (
+                        cert.name
+                      )}
+                    </p>
+                    <p className="text-sm text-muted">
+                      {[cert.issuer, cert.issued_on && formatDate(cert.issued_on)].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
       </div>
     </section>
   );

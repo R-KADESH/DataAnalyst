@@ -13,7 +13,7 @@ import { initials } from "@/lib/format";
 import { getSiteData } from "@/lib/site";
 
 export default async function Home() {
-  const { profile, projects, log, skills, stats, lastUpdated } = await getSiteData();
+  const { profile, projects, log, skills, certifications, stats, lastUpdated } = await getSiteData();
 
   return (
     <>
@@ -38,7 +38,7 @@ export default async function Home() {
         </section>
 
         <LearningLog entries={log} lastUpdated={lastUpdated} />
-        <Skills skills={skills} />
+        <Skills skills={skills} certifications={certifications} />
         <About profile={profile} />
         <Contact profile={profile} />
       </main>

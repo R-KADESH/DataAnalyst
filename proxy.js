@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { hasSupabase } from "@/lib/supabase/config";
 
 // Runs before every /admin request: refreshes your login session and
 // sends visitors who aren't logged in to the login page.
 // (Real protection is in the database rules; this is the friendly redirect.)
 export async function proxy(request) {
+  const isLoginPage = request.nextUrl.pathname === "/admin/login";
+
+  // Supabase not set up yet: only the login page (with setup instructions) is reachable
+  if (!hasSupabase) {
+    return isLoginPage ? NextResponse.next() : NextResponse.redirect(new URL("/admin/login", request.url));
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -28,8 +36,6 @@ export async function proxy(request) {
 
   const { data } = await supabase.auth.getClaims();
   const isLoggedIn = Boolean(data?.claims);
-  const isLoginPage = request.nextUrl.pathname === "/admin/login";
-
   if (!isLoggedIn && !isLoginPage) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }

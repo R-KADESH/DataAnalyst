@@ -152,24 +152,53 @@ create policy "admin delete portfolio files" on storage.objects
 -- =========================================================
 -- Starter content (edit everything later from /admin)
 -- =========================================================
-insert into profile (id, full_name, headline, bio)
+insert into profile (id, full_name, headline, bio, journey)
 values (
   1,
   'TAPOPHILE DJOUAKA Nathanael Caleb',
   'Aspiring Data Analyst — turning raw data into clear decisions',
-  'Write a short introduction about yourself here.'
+  'I build dashboards and analyses that make data easy to act on. I''m learning in public: every project, course and fix is logged below, so you can see how my skills grow week by week.',
+  '[
+    {"date": "2026", "title": "Started my data analytics journey", "description": "Excel, SQL and Power BI fundamentals through hands-on projects."},
+    {"date": "2026", "title": "First dashboards", "description": "From a first Power BI report to a 50,000-row Excel dashboard."},
+    {"date": "Next", "title": "Internship & scholarship", "description": "Bringing this dedication to a real data team — and to further studies."}
+  ]'::jsonb
 )
 on conflict (id) do nothing;
 
--- The site shows the full starter text from lib/content.js until you add projects here.
-insert into projects (slug, title, summary, tools, dataset_rows, cover_image_url, featured, status, sort_order)
+-- Your two featured projects, with their full case-study text
+insert into projects (slug, title, summary, problem, data_description, approach, findings, impact, improvements, tools, dataset_rows, cover_image_url, featured, status, sort_order)
 values
-  ('bmw-sales', 'BMW Sales 2010–2024',
+  ('bmw-sales',
+   'BMW Sales 2010–2024',
    'Interactive Excel dashboard over 50,000 sales records: 11 models, 6 regions, 15 years.',
-   '{Excel, Pivot Tables, Data Visualization}', 50000, '/projects/bmw-sales.png', true, 'published', 1),
-  ('data-jobs-survey', 'Data Jobs Survey',
+   'How do sales volumes differ by model, region, fuel type and year — and can a manager explore that in seconds without touching formulas?',
+   '50,000 sales records (2010–2024) with model, year, region, colour, fuel type, transmission, engine size, mileage, price and sales volume. The distribution is almost perfectly even across categories, which suggests a synthetic dataset — so the project focuses on dashboard building, not real BMW strategy.',
+   'Cleaned the data in a working sheet, summarised it with pivot tables, then built a one-page dashboard with KPI cards and slicers (sales class, fuel type, region, year) that drive every chart at once.',
+   'Asia is the top region (≈43.0M units) and the 7 Series the best-selling model (≈23.8M units), but every region and model sits within about ±3% of the others. Yearly sales stay between 16.3M and 17.9M, peaking in 2022.',
+   'A stakeholder can answer "how did X sell in Y?" with two clicks instead of writing formulas.',
+   'Use estimated revenue (price × volume) instead of summing prices, start bar-chart axes at zero, and rebuild the dashboard in Power BI to compare both tools.',
+   '{"Excel","Pivot Tables","Data Visualization"}',
+   50000,
+   '/projects/bmw-sales.png',
+   true,
+   'published',
+   1),
+  ('data-jobs-survey',
+   'Data Jobs Survey',
    'Power BI report on 630 data professionals: salaries, favourite languages and job satisfaction.',
-   '{Power BI, Data Visualization}', 630, '/projects/data-jobs-survey.png', true, 'published', 2)
+   'What do data professionals earn, which tools do they prefer, and how happy are they with their jobs?',
+   'A survey of 630 data professionals worldwide: job title, salary range, favourite programming language, country, age and satisfaction scores (0–10).',
+   'Transformed the survey in Power Query (splitting salary ranges, averaging them, cleaning job titles), then designed a single-page report with a treemap, bar charts, a donut and gauges in a consistent navy/green palette.',
+   'Python is the clear favourite (≈2 in 3 respondents). Data Scientists report the highest average salary (≈$77k), Data Analysts ≈$41k. Satisfaction is moderate: 5.7/10 for work-life balance and only 4.3/10 for salary.',
+   'Shows at a glance which roles pay most and which skills are most in demand — useful for anyone (like me) planning a data career.',
+   'Rename raw survey field titles, label salaries in $k, add a country slicer and publish a live version to Power BI Service.',
+   '{"Power BI","Power Query","Data Visualization"}',
+   630,
+   '/projects/data-jobs-survey.png',
+   true,
+   'published',
+   2)
 on conflict (slug) do nothing;
 
 insert into learning_log (entry_date, title, description, tags)
