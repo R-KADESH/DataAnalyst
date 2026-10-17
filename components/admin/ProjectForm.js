@@ -54,7 +54,13 @@ export default function ProjectForm({ project = {} }) {
       </Card>
 
       <Card title="Links">
-        <Field label="Live dashboard (Power BI, Tableau…)" name="live_url" type="url" defaultValue={project.live_url} />
+        <Field
+          label="Live dashboard (Power BI, Tableau…)"
+          name="live_url"
+          type="url"
+          defaultValue={project.live_url}
+          hint="A Power BI “Publish to web” link or a Tableau Public link is embedded on the case study so visitors can interact with it."
+        />
         <Field label="GitHub" name="github_url" type="url" defaultValue={project.github_url} />
         <Field label="Notebook" name="notebook_url" type="url" defaultValue={project.notebook_url} />
       </Card>

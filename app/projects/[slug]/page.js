@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
+import LiveDashboard from "@/components/LiveDashboard";
 import Navbar from "@/components/Navbar";
 import Reveal from "@/components/Reveal";
 import Tag from "@/components/Tag";
 import { getProfile, getProject, getProjects } from "@/lib/data";
+import { getEmbed } from "@/lib/embed";
 import { formatDate, initials } from "@/lib/format";
 
 export async function generateStaticParams() {
@@ -44,6 +46,7 @@ export default async function ProjectPage({ params }) {
   if (!project) notFound();
 
   const others = projects.filter((p) => p.slug !== slug);
+  const embed = getEmbed(project.live_url);
   const links = [
     project.live_url && { label: "Live dashboard", href: project.live_url },
     project.github_url && { label: "Code on GitHub", href: project.github_url },
@@ -89,6 +92,8 @@ export default async function ProjectPage({ params }) {
               </div>
             </Reveal>
           )}
+
+          {embed && <LiveDashboard embed={embed} title={project.title} url={project.live_url} />}
 
           <Reveal className="mt-10 flex flex-wrap gap-2">
             {project.tools?.map((tool) => (
