@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import LiveDashboard from "@/components/LiveDashboard";
 import Navbar from "@/components/Navbar";
 import Reveal from "@/components/Reveal";
+import ScrollProgress from "@/components/ScrollProgress";
 import Tag from "@/components/Tag";
 import { getProfile, getProject, getProjects } from "@/lib/data";
 import { getEmbed } from "@/lib/embed";
@@ -55,8 +57,9 @@ export default async function ProjectPage({ params }) {
 
   return (
     <>
+      <ScrollProgress />
       <Navbar initials={initials(profile.full_name)} />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <header className="relative isolate overflow-hidden bg-gradient-to-b from-accent-soft/70 to-background pt-32 pb-8 text-ink sm:pt-40">
           <div className="absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-sky/20 blur-3xl animate-float" />
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
@@ -148,6 +151,7 @@ export default async function ProjectPage({ params }) {
         </div>
       </main>
       <Footer name={profile.full_name} lastUpdated={project.updated_at ?? "2026-01-01"} />
+      <BackToTop />
     </>
   );
 }

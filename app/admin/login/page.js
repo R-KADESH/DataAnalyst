@@ -6,7 +6,7 @@ export const metadata = { title: "Sign in", robots: { index: false } };
 
 export default function LoginPage() {
   return (
-    <main className="flex flex-1 items-center justify-center bg-gradient-to-b from-accent-soft to-background px-4 py-16">
+    <main id="main" className="flex flex-1 items-center justify-center bg-gradient-to-b from-accent-soft to-background px-4 py-16">
       <div className="w-full max-w-md rounded-3xl border border-line bg-surface p-8 shadow-xl shadow-navy/10 sm:p-10">
         <p className="font-display text-3xl font-bold text-navy">
           NC<span className="text-sky">.</span>

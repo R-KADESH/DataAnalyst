@@ -64,6 +64,12 @@ h1, h2, h3 {
   font-family: var(--font-display), var(--font-sans), sans-serif;
 }
 
+/* Clear keyboard focus outline everywhere */
+:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: var(--accent-soft);
   color: var(--navy);

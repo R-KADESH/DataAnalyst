@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="flex min-h-screen flex-col bg-background lg:flex-row">
       <Sidebar />
-      <main className="flex-1 px-4 py-8 sm:px-8 lg:px-12 lg:py-12">
+      <main id="main" className="flex-1 px-4 py-8 sm:px-8 lg:px-12 lg:py-12">
         <div className="mx-auto max-w-5xl">
           <Suspense fallback={<Loading />}>
             <AdminOnly>{children}</AdminOnly>

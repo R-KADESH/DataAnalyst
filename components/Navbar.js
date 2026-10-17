@@ -23,6 +23,14 @@ export default function Navbar({ initials }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu with the Escape key
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -31,7 +39,7 @@ export default function Navbar({ initials }) {
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+      <nav aria-label="Main" className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <Link
           href="/"
           className="font-display text-2xl font-bold text-navy transition-transform hover:-rotate-3 hover:scale-110"

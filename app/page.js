@@ -1,6 +1,7 @@
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 import Hero from "@/components/Hero";
 import LearningLog from "@/components/LearningLog";
 import Navbar from "@/components/Navbar";
@@ -18,7 +19,7 @@ export default async function Home() {
   return (
     <>
       <Navbar initials={initials(profile.full_name)} />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Hero profile={profile} stats={stats} />
         <ToolMarquee tools={skills.map((s) => s.name)} />
 
@@ -43,6 +44,7 @@ export default async function Home() {
         <Contact profile={profile} />
       </main>
       <Footer name={profile.full_name} lastUpdated={lastUpdated} />
+      <BackToTop />
     </>
   );
 }

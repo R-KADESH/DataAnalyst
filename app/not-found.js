@@ -4,7 +4,7 @@ export const metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <main className="relative isolate flex flex-1 items-center justify-center overflow-hidden bg-gradient-to-b from-accent-soft to-background px-4 py-24 text-center">
+    <main id="main" className="relative isolate flex flex-1 items-center justify-center overflow-hidden bg-gradient-to-b from-accent-soft to-background px-4 py-24 text-center">
       <div className="absolute -top-24 left-1/4 -z-10 h-80 w-80 rounded-full bg-sky/20 blur-3xl animate-float" />
       <div>
         {/* A tiny "empty chart" — the data for this page is missing */}
