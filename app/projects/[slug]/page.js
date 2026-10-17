@@ -16,7 +16,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = await getProject(slug);
-  return project ? { title: project.title, description: project.summary } : {};
+  if (!project) return {};
+  return {
+    title: project.title,
+    description: project.summary,
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      images: project.cover_image_url ? [{ url: project.cover_image_url, alt: `${project.title} dashboard` }] : undefined,
+    },
+  };
 }
 
 // The case study follows the same story every time: question → data → method → results → next steps.

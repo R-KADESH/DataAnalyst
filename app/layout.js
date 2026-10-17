@@ -1,5 +1,6 @@
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/site-url";
 
 // Headings: Bricolage Grotesque — playful and lively, still professional
 const bricolage = Bricolage_Grotesque({
@@ -19,6 +20,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    type: "website",
+    siteName: "Nathanael Caleb Tapophile Djouaka",
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image" },
   title: {
     default: "Nathanael Caleb Tapophile Djouaka — Data Analyst",
     template: "%s · Nathanael Caleb Tapophile Djouaka",
