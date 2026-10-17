@@ -10,11 +10,12 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import Skills from "@/components/Skills";
 import ToolMarquee from "@/components/ToolMarquee";
+import UpcomingProjects from "@/components/UpcomingProjects";
 import { initials } from "@/lib/format";
 import { getSiteData } from "@/lib/site";
 
 export default async function Home() {
-  const { profile, projects, log, skills, certifications, stats, lastUpdated } = await getSiteData();
+  const { profile, projects, upcoming, log, skills, certifications, stats, lastUpdated } = await getSiteData();
 
   return (
     <>
@@ -35,6 +36,7 @@ export default async function Home() {
                 </Reveal>
               ))}
             </div>
+            <UpcomingProjects projects={upcoming} />
           </div>
         </section>
 

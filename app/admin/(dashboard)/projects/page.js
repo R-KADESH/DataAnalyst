@@ -41,10 +41,10 @@ export default async function ProjectsAdmin() {
                 <p className="text-sm text-muted">
                   <span
                     className={`mr-2 rounded-full px-2 py-0.5 text-xs font-medium ${
-                      project.status === "published" ? "bg-leaf/15 text-leaf" : "bg-line text-muted"
+                      { published: "bg-leaf/15 text-leaf", in_progress: "bg-sun/15 text-ink" }[project.status] ?? "bg-line text-muted"
                     }`}
                   >
-                    {project.status === "published" ? "Published" : "Draft"}
+                    {{ published: "Published", in_progress: "In progress" }[project.status] ?? "Draft"}
                   </span>
                   Updated {formatDate(project.updated_at, { day: "numeric", month: "short", year: "numeric" })}
                 </p>

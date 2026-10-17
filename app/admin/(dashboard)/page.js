@@ -12,8 +12,9 @@ async function count(supabase, table, filter) {
 
 export default async function Overview() {
   const supabase = await createClient();
-  const [published, drafts, entries, skills, certs, latest] = await Promise.all([
+  const [published, building, drafts, entries, skills, certs, latest] = await Promise.all([
     count(supabase, "projects", (q) => q.eq("status", "published")),
+    count(supabase, "projects", (q) => q.eq("status", "in_progress")),
     count(supabase, "projects", (q) => q.eq("status", "draft")),
     count(supabase, "learning_log"),
     count(supabase, "skills"),
@@ -28,6 +29,7 @@ export default async function Overview() {
 
   const stats = [
     { label: "Published projects", value: published, href: "/admin/projects" },
+    { label: "In progress", value: building, href: "/admin/projects" },
     { label: "Drafts", value: drafts, href: "/admin/projects" },
     { label: "Learning entries", value: entries, href: "/admin/log" },
     { label: "Skills", value: skills, href: "/admin/skills" },
@@ -38,7 +40,7 @@ export default async function Overview() {
     <>
       <PageHeader title="Welcome back 👋" description="Keep the portfolio alive: small, regular updates beat big rare ones." />
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {stats.map((stat) => (
           <Link key={stat.label} href={stat.href} className="rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-accent">
             <p className="font-display text-3xl font-bold text-navy">{stat.value}</p>

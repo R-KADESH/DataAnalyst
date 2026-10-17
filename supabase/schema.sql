@@ -58,7 +58,7 @@ create table if not exists projects (
   notebook_url     text,
   live_url         text,
   featured         boolean not null default false,
-  status           text not null default 'draft' check (status in ('draft', 'published')),
+  status           text not null default 'draft' check (status in ('draft', 'in_progress', 'published')),  -- in_progress = teaser card
   sort_order       int not null default 0,
   created_at       timestamptz not null default now(),
   updated_at       timestamptz not null default now()
@@ -121,7 +121,7 @@ create policy "public read profile" on profile for select using (true);
 create policy "admin write profile" on profile for all using (is_admin()) with check (is_admin());
 
 -- Visitors only see published projects; you see drafts too
-create policy "public read projects" on projects for select using (status = 'published' or is_admin());
+create policy "public read projects" on projects for select using (status in ('published', 'in_progress') or is_admin());
 create policy "admin write projects" on projects for all using (is_admin()) with check (is_admin());
 
 create policy "public read log" on learning_log for select using (true);
@@ -219,3 +219,17 @@ insert into skills (name, category) values
   ('Power Query', 'Data Preparation'), ('Data Visualization', 'Visualization'),
   ('SQL', 'Databases'), ('Data Modeling', 'Databases')
 on conflict (name) do nothing;
+
+-- Projects you're still building: shown as "Currently building" teaser cards
+insert into projects (slug, title, summary, tools, status, sort_order)
+values
+  ('sql-layoffs-cleaning', 'SQL Data Cleaning: Layoffs',
+   'Cleaning a messy layoffs table in MySQL (duplicates, casing, dates, NULLs), then exploring trends with window functions.',
+   '{SQL, MySQL}', 'in_progress', 10),
+  ('sales-star-schema', 'Sales Star Schema',
+   'A Power BI sales model with one fact and five dimension tables, plus DAX measures for margin and year-over-year growth.',
+   '{Power BI, Data Modeling}', 'in_progress', 11),
+  ('theologia-sql', 'Theologia: SQL on Theological Research',
+   'Answering research questions about scholars, doctrines and citations across traditions with SQL.',
+   '{SQL, MySQL}', 'in_progress', 12)
+on conflict (slug) do nothing;

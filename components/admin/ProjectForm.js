@@ -73,6 +73,7 @@ export default function ProjectForm({ project = {} }) {
             defaultValue={project.status ?? "draft"}
             options={[
               { value: "draft", label: "Draft (hidden)" },
+              { value: "in_progress", label: "In progress (teaser card)" },
               { value: "published", label: "Published (visible)" },
             ]}
           />

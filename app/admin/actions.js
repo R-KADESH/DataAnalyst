@@ -68,7 +68,7 @@ export async function saveProject(_previous, formData) {
       notebook_url: text(formData, "notebook_url"),
       live_url: text(formData, "live_url"),
       featured: formData.get("featured") === "on",
-      status: formData.get("status") === "published" ? "published" : "draft",
+      status: ["published", "in_progress"].includes(formData.get("status")) ? formData.get("status") : "draft",
       sort_order: number(formData, "sort_order") ?? 0,
     };
 
